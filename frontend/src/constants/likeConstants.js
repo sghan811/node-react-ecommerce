@@ -1,0 +1,1 @@
+export const LIKE_REQUEST = 'LIKE_REQUEST';
