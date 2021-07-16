@@ -6,9 +6,11 @@ import mongoose from 'mongoose';
 const router = express.Router();
 
 router.get("/", isAuth, async (req, res) => {
-  const like = await Like.findOne({ _id: req.params.id });
+  const like = await Like.fnidOne({ _id: req.params.product });
+  const like2 = like.id.push(req.params.id);
     const product = new Product({
-        
+        product: req.params.product,
+        id: like2
       });
     const newProduct = await product.save();
     if (newProduct) {
