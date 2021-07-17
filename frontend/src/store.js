@@ -8,8 +8,6 @@ import {
   productDeleteReducer,
   productReviewSaveReducer,
   productReviewSaveReducer2,
-  productListReducer2,
-  productDetailsReducer2,
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducers';
 import {
@@ -34,10 +32,8 @@ const initialState = {
   userSignin: { userInfo },
 };
 const reducer = combineReducers({
-  productList2: productListReducer2,
   productReviewSave2: productReviewSaveReducer2,
   productList: productListReducer,
-  productDetails2: productDetailsReducer2,
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userSignin: userSigninReducer,

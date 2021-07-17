@@ -15,11 +15,11 @@ function ProductScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const productDetails = useSelector((state) => state.productDetails);
-  const productDetails2 = useSelector((state) => state.productDetails2);
-  const { product, loading, error } = productDetails;
+  const { product, loading, error, product2} = productDetails;
   const productReviewSave = useSelector((state) => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
   const dispatch = useDispatch();
+  console.log(product);
   useEffect(() => {
     if (productSaveSuccess) {
       alert('Review submitted successfully.');
@@ -134,9 +134,9 @@ function ProductScreen(props) {
           </div>
           <div className="content-margined">
             <h2>Reviews</h2>
-            {!product.reviews2.length && <div>There is no review</div>}
+            {!product2.reviews2.length && <div>There is no review</div>}
             <ul className="review" id="reviews">
-              {product.reviews2.map((review) => (
+              {product2.reviews2.map((review) => (
                 <li key={review._id}>
                   <div>{review.name}</div>
                   <div>

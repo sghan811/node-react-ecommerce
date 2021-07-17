@@ -48,39 +48,13 @@ function productListReducer(state = { products: [] }, action) {
   }
 }
 
-function productListReducer2(state = { products: [] }, action) {
-  switch (action.type) {
-    case PRODUCT_LIST_REQUEST2:
-      return { loading: true, products2: [] };
-    case PRODUCT_LIST_SUCCESS2:
-      return { loading: false, products2: action.payload };
-    case PRODUCT_LIST_FAIL2:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-}
-
-function productDetailsReducer(state = { product: { reviews: [] } }, action) {
+function productDetailsReducer(state = { product: { reviews: [] }, product2: {reviews2: []} }, action) {
   switch (action.type) {
     case PRODUCT_DETAILS_REQUEST:
       return { loading: true };
     case PRODUCT_DETAILS_SUCCESS:
-      return { loading: false, product: action.payload };
+      return { loading: false, product: action.payload , product2: action.payload};
     case PRODUCT_DETAILS_FAIL:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-}
-
-function productDetailsReducer2(state = { product: { reviews2: [] } }, action) {
-  switch (action.type) {
-    case PRODUCT_DETAILS_REQUEST2:
-      return { loading: true };
-    case PRODUCT_DETAILS_SUCCESS2:
-      return { loading: false, product: action.payload };
-    case PRODUCT_DETAILS_FAIL2:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -113,12 +87,12 @@ function productSaveReducer(state = { product: {} }, action) {
   }
 }
 
-function productSaveReducer2(state = { product: {} }, action) {
+function productSaveReducer2(state = { product2: {} }, action) {
   switch (action.type) {
     case PRODUCT_SAVE_REQUEST2:
       return { loading: true };
     case PRODUCT_SAVE_SUCCESS2:
-      return { loading: false, success: true, product: action.payload };
+      return { loading: false, success: true, product2: action.payload };
     case PRODUCT_SAVE_FAIL2:
       return { loading: false, error: action.payload };
     default:
@@ -158,13 +132,11 @@ function productReviewSaveReducer2(state = {}, action) {
 
 
 export {
-  productListReducer2,
   productListReducer,
   productDetailsReducer,
   productSaveReducer,
   productDeleteReducer,
   productReviewSaveReducer,
-  productDetailsReducer2,
   productSaveReducer2,
   productReviewSaveReducer2,
 };
