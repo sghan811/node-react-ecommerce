@@ -21,6 +21,7 @@ const prodctSchema = new mongoose.Schema({
   rating: { type: Number, default: 0, required: true },
   numReviews: { type: Number, default: 0, required: true },
   reviews: [reviewSchema],
+  reviews2: [reviewSchema],
 });
 
 const productModel = mongoose.model('Product', prodctSchema);

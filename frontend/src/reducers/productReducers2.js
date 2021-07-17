@@ -30,7 +30,7 @@ import {
     }
   }
   
-  function productDetailsReducer2(state = { product2: { reviews: [] } }, action) {
+  function productDetailsReducer2(state = { product2: { reviews2: [] } }, action) {
     switch (action.type) {
       case PRODUCT_DETAILS_REQUEST2:
         return { loading: true };

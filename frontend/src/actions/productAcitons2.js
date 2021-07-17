@@ -79,7 +79,7 @@ import {
     }
   };
   
-  const deleteProdcut2 = (productId) => async (dispatch, getState) => {
+  const deleteProduct2 = (productId) => async (dispatch, getState) => {
     try {
       const {
         userSignin: { userInfo },
@@ -105,7 +105,7 @@ import {
       } = getState();
       dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST2, payload: review });
       const { data } = await axios.post(
-        `/api/products2/${productId}/reviews`,
+        `/api/products2/${productId}/reviews2`,
         review,
         {
           headers: {
@@ -124,7 +124,7 @@ import {
     listProducts2,
     detailsProduct2,
     saveProduct2,
-    deleteProdcut2,
+    deleteProduct2,
     saveProductReview2,
   };
   

@@ -5,6 +5,7 @@ import { detailsProduct, saveProductReview } from '../actions/productActions';
 import { detailsProduct2, saveProductReview2 } from '../actions/productAcitons2';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
+import { PRODUCT_REVIEW_SAVE_RESET2 } from '../constants/productConstants2';
 
 function ProductScreen(props) {
   const [qty, setQty] = useState(1);
@@ -17,9 +18,11 @@ function ProductScreen(props) {
   const productDetails = useSelector((state) => state.productDetails);
   const productDetails2 = useSelector((state) => state.productDetails2);
   const { product, loading, error } = productDetails;
-  const { product2 } = productDetails2;
+  const { product2} = productDetails2;
   const productReviewSave = useSelector((state) => state.productReviewSave);
+  const productReviewSave2 = useSelector((state) => state.productReviewSave2);
   const { success: productSaveSuccess } = productReviewSave;
+  const { success: productSaveSuccess2 } = productReviewSave2;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,8 +31,17 @@ function ProductScreen(props) {
       setRating(0);
       setComment('');
       dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+    }else{
+      if(productSaveSuccess2){
+        alert('Review submitted successfully2.');
+        setRating2(0);
+        setComment2('');
+        dispatch({ type: PRODUCT_REVIEW_SAVE_RESET2 });
+      }
+
     }
     dispatch(detailsProduct(props.match.params.id));
+    dispatch(detailsProduct2(props.match.params.id));
     return () => {
       //
     };
@@ -133,9 +145,9 @@ function ProductScreen(props) {
           </div>
           <div className="content-margined">
             <h2>Reviews</h2>
-            {!product2.reviews.length && <div>There is no review</div>}
+            {!product2.reviews2.length && <div>There is no review</div>}
             <ul className="review" id="reviews">
-              {product2.reviews.map((review) => (
+              {product2.reviews2.map((review) => (
                 <li key={review._id}>
                   <div>{review.name}</div>
                   <div>
@@ -155,8 +167,8 @@ function ProductScreen(props) {
                         <select
                           name="rating"
                           id="rating"
-                          value={rating2}
-                          onChange={(b) => setRating2(b.target.value)}
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
                         >
                           <option value="1">1- Poor</option>
                           <option value="2">2- Fair</option>
@@ -169,8 +181,8 @@ function ProductScreen(props) {
                         <label htmlFor="comment">Comment</label>
                         <textarea
                           name="comment"
-                          value={comment2}
-                          onChange={(b) => setComment2(b.target.value)}
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
                         ></textarea>
                       </li>
                       <li>

@@ -1,5 +1,5 @@
 import express from 'express';
-import Product2 from '../models/productModel2';
+import Product from '../models/productModel';
 import { isAuth, isAdmin } from '../util';
 
 const router = express.Router();
@@ -19,36 +19,36 @@ router.get('/', async (req, res) => {
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
-  const products2 = await Product2.find({ ...category, ...searchKeyword }).sort(
+  const products = await Product.find({ ...category, ...searchKeyword }).sort(
     sortOrder
   );
-  res.send(products2);
+  res.send(products);
 });
 
 router.get('/:id', async (req, res) => {
-  const product2 = await Product2.findOne({ _id: req.params.id });
-  if (product2) {
-    res.send(product2);
+  const product = await Product.findOne({ _id: req.params.id });
+  if (product) {
+    res.send(product);
   } else {
     res.status(404).send({ message: 'Product Not Found.' });
   }
 });
-router.post('/:id/reviews', isAuth, async (req, res) => {
-  const product2 = await Product2.findById(req.params.id);
-  if (product2) {
+router.post('/:id/reviews2', isAuth, async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
     const review = {
       name: req.body.name,
       rating: Number(req.body.rating),
       comment: req.body.comment,
     };
-    product2.reviews.push(review);
-    product2.numReviews = product2.reviews.length;
-    product2.rating =
-      product2.reviews.reduce((a, c) => c.rating + a, 0) /
-      product2.reviews.length;
-    const updatedProduct = await product2.save();
+    product.reviews2.push(review);
+    product.numReviews = product.reviews2.length;
+    product.rating =
+      product.reviews2.reduce((a, c) => c.rating + a, 0) /
+      product.reviews2.length;
+    const updatedProduct = await product.save();
     res.status(201).send({
-      data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      data: updatedProduct.reviews2[updatedProduct.reviews2.length - 1],
       message: 'Review saved successfully.',
     });
   } else {
@@ -57,16 +57,16 @@ router.post('/:id/reviews', isAuth, async (req, res) => {
 });
 router.put('/:id', isAuth, isAdmin, async (req, res) => {
   const productId = req.params.id;
-  const product2 = await Product2.findById(productId);
-  if (product2) {
-    product2.name = req.body.name;
-    product2.price = req.body.price;
-    product2.image = req.body.image;
-    product2.brand = req.body.brand;
-    product2.category = req.body.category;
-    product2.countInStock = req.body.countInStock;
-    product2.description = req.body.description;
-    const updatedProduct = await product2.save();
+  const product = await Product.findById(productId);
+  if (product) {
+    product.name = req.body.name;
+    product.price = req.body.price;
+    product.image = req.body.image;
+    product.brand = req.body.brand;
+    product.category = req.body.category;
+    product.countInStock = req.body.countInStock;
+    product.description = req.body.description;
+    const updatedProduct = await product.save();
     if (updatedProduct) {
       return res
         .status(200)
@@ -77,7 +77,7 @@ router.put('/:id', isAuth, isAdmin, async (req, res) => {
 });
 
 router.delete('/:id', isAuth, isAdmin, async (req, res) => {
-  const deletedProduct = await Product2.findById(req.params.id);
+  const deletedProduct = await Product.findById(req.params.id);
   if (deletedProduct) {
     await deletedProduct.remove();
     res.send({ message: 'Product Deleted' });
@@ -87,7 +87,7 @@ router.delete('/:id', isAuth, isAdmin, async (req, res) => {
 });
 
 router.post('/', isAuth, isAdmin, async (req, res) => {
-  const product2 = new Product2({
+  const product = new Product({
     name: req.body.name,
     price: req.body.price,
     image: req.body.image,
@@ -98,7 +98,7 @@ router.post('/', isAuth, isAdmin, async (req, res) => {
     rating: req.body.rating,
     numReviews: req.body.numReviews,
   });
-  const newProduct = await product2.save();
+  const newProduct = await product.save();
   if (newProduct) {
     return res
       .status(201)

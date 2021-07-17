@@ -44,7 +44,7 @@ function ProductsScreen(props) {
     return () => {
       //
     };
-  }, [successSave, successDelete]);
+  }, [successSave]);
 
   const openModal = (product) => {
     setModalVisible(true);
@@ -58,10 +58,11 @@ function ProductsScreen(props) {
     setCountInStock(product.countInStock);
   };
   const submitHandler = (e) => {
+    const idid = id;
     e.preventDefault();
     dispatch(
       saveProduct({
-        _id: id,
+        _id: idid,
         name,
         price,
         image,
