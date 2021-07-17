@@ -8,6 +8,13 @@ import {
   productDeleteReducer,
   productReviewSaveReducer,
 } from './reducers/productReducers';
+import {
+  productListReducer2,
+  productDetailsReducer2,
+  productSaveReducer2,
+  productDeleteReducer2,
+  productReviewSaveReducer2,
+} from './reducers/productReducers2';
 import { cartReducer } from './reducers/cartReducers';
 import {
   userSigninReducer,
@@ -31,6 +38,11 @@ const initialState = {
   userSignin: { userInfo },
 };
 const reducer = combineReducers({
+  productList2: productListReducer2,
+  productDetails2: productDetailsReducer2,
+  productSave2: productSaveReducer2,
+  productDelete2: productDeleteReducer2,
+  productReviewSave2: productReviewSaveReducer2,
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,

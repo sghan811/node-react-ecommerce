@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect2, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { detailsProduct, saveProductReview } from '../actions/productActions';
+import { detailsProduct2, saveProductReview2 } from '../actions/productAcitons2';
 import Rating from '../components/Rating';
 import { PRODUCT_REVIEW_SAVE_RESET } from '../constants/productConstants';
 
@@ -9,10 +10,14 @@ function ProductScreen(props) {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
+  const [rating2, setRating2] = useState(0);
+  const [comment2, setComment2] = useState('');
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const productDetails = useSelector((state) => state.productDetails);
+  const productDetails2 = useSelector((state) => state.productDetails2);
   const { product, loading, error } = productDetails;
+  const { product2 } = productDetails2;
   const productReviewSave = useSelector((state) => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
   const dispatch = useDispatch();
@@ -43,7 +48,17 @@ function ProductScreen(props) {
   const handleAddToCart = () => {
     props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
   };
-
+  const submitHandler2 = (e) => {
+    e.preventDefault();
+    // dispatch actions
+    dispatch(
+      saveProductReview2(props.match.params.id, {
+        name: userInfo.name,
+        rating: rating2,
+        comment: comment2,
+      })
+    );
+  };
   return (
     <div>
       <div className="back-to-result">
@@ -115,6 +130,63 @@ function ProductScreen(props) {
                 </li>
               </ul>
             </div>
+          </div>
+          <div className="content-margined">
+            <h2>Reviews</h2>
+            {!product2.reviews.length && <div>There is no review</div>}
+            <ul className="review" id="reviews">
+              {product2.reviews.map((review) => (
+                <li key={review._id}>
+                  <div>{review.name}</div>
+                  <div>
+                    <Rating value={review.rating}></Rating>
+                  </div>
+                  <div>{review.createdAt.substring(0, 10)}</div>
+                  <div>{review.comment}</div>
+                </li>
+              ))}
+              <li>
+                <h3>Write a customer review</h3>
+                {userInfo ? (
+                  <form onSubmit={submitHandler2}>
+                    <ul className="form-container">
+                      <li>
+                        <label htmlFor="rating">Rating</label>
+                        <select
+                          name="rating"
+                          id="rating"
+                          value={rating2}
+                          onChange={(b) => setRating2(b.target.value)}
+                        >
+                          <option value="1">1- Poor</option>
+                          <option value="2">2- Fair</option>
+                          <option value="3">3- Good</option>
+                          <option value="4">4- Very Good</option>
+                          <option value="5">5- Excelent</option>
+                        </select>
+                      </li>
+                      <li>
+                        <label htmlFor="comment">Comment</label>
+                        <textarea
+                          name="comment"
+                          value={comment2}
+                          onChange={(b) => setComment2(b.target.value)}
+                        ></textarea>
+                      </li>
+                      <li>
+                        <button type="submit" className="button primary">
+                          Submit
+                        </button>
+                      </li>
+                    </ul>
+                  </form>
+                ) : (
+                  <div>
+                    Please <Link to="/signin">Sign-in</Link> to write a review.
+                  </div>
+                )}
+              </li>
+            </ul>
           </div>
           <div className="content-margined">
             <h2>Reviews</h2>
